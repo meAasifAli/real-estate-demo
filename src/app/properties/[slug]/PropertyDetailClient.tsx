@@ -217,9 +217,9 @@ export default function PropertyDetailClient({ property, related }: Props) {
                   <p className="text-slate-400 text-sm">Interactive map available in production</p>
                   <div className="mt-5 flex flex-wrap justify-center gap-3">
                     {[
-                      { label: 'Dubai Metro: 5 min', Icon: Train },
-                      { label: 'Airport: 20 min', Icon: Plane },
-                      { label: 'Mall: 3 min', Icon: ShoppingBag },
+                      { label: 'Namma Metro: 5 min', Icon: Train },
+                      { label: 'Kempegowda Airport: 35 min', Icon: Plane },
+                      { label: 'Tech Park / Mall: 10 min', Icon: ShoppingBag },
                     ].map(({ label, Icon }) => (
                       <div key={label} className="flex items-center gap-1.5 bg-white px-4 py-2 rounded-full text-sm text-slate-500 shadow-sm border border-slate-100">
                         <Icon size={13} className="text-gold" />
@@ -292,7 +292,7 @@ export default function PropertyDetailClient({ property, related }: Props) {
 
               {/* Ref number */}
               <div className="mt-5 pt-4 border-t border-slate-100 text-center">
-                <span className="text-slate-400 text-xs">Ref: LX-{property.id.split('-')[1].toUpperCase()}</span>
+                <span className="text-slate-400 text-xs">Ref: BLR-{property.id.split('-')[1]?.toUpperCase() || 'PROP'}</span>
               </div>
             </div>
 
@@ -308,16 +308,16 @@ export default function PropertyDetailClient({ property, related }: Props) {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-white/60">20% Down Payment</span>
-                    <span className="font-medium text-gold">AED {(property.price * 0.2 / 1000000).toFixed(2)}M</span>
+                    <span className="font-medium text-gold">{formatPrice(property.price * 0.2, 'INR')}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-white/60">Est. Monthly</span>
                     <span className="font-semibold text-gold text-lg">
-                      AED {Math.round(property.price * 0.8 * 0.0045).toLocaleString()}
+                      ₹{Math.round(property.price * 0.8 * 0.008678).toLocaleString('en-IN')}/mo
                     </span>
                   </div>
                 </div>
-                <p className="text-white/40 text-xs mt-4">*Based on 4.5% rate over 25 years. Not financial advice.</p>
+                <p className="text-white/40 text-xs mt-4">*Based on 8.5% rate over 20 years. Not financial advice.</p>
               </div>
             )}
           </div>

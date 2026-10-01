@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Outfit, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -44,26 +44,26 @@ function YoutubeIcon({ size = 15, strokeWidth = 1.5, className }: { size?: numbe
   );
 }
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-});
-
 export const metadata: Metadata = {
-  title: "LuxeEstates | Premium Real Estate",
+  title: "LuxeEstates | Premium Real Estate Bengaluru",
   description:
-    "Discover exceptional properties with LuxeEstates — your trusted partner for premium homes, villas, and commercial spaces.",
-  keywords: "luxury real estate, premium properties, buy home, rent apartment, villa, commercial space",
+    "Discover exceptional properties with LuxeEstates — your trusted partner for premium homes, villas, and commercial spaces in Bengaluru.",
+  keywords: "luxury real estate, premium properties, buy home, rent apartment, villa, commercial space, Bangalore",
   openGraph: {
-    title: "LuxeEstates | Premium Real Estate",
-    description: "Discover exceptional properties crafted for extraordinary living.",
+    title: "LuxeEstates | Premium Real Estate Bengaluru",
+    description: "Discover exceptional properties crafted for extraordinary living in Bengaluru.",
     type: "website",
   },
 };
@@ -76,9 +76,9 @@ const socialLinks = [
 ];
 
 const contactDetails = [
-  { Icon: MapPin, text: "42 Skyline Boulevard, Business Bay, Dubai" },
-  { Icon: Phone, text: "+971 4 567 8900" },
-  { Icon: Mail, text: "hello@luxeestates.ae" },
+  { Icon: MapPin, text: "Level 4, Prestige Tech Park, Outer Ring Road, Bengaluru, Karnataka" },
+  { Icon: Phone, text: "+91 98450 12345" },
+  { Icon: Mail, text: "hello@luxeestates.in" },
   { Icon: Clock, text: "Mon–Sat: 9 AM – 7 PM" },
 ];
 
@@ -86,9 +86,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable} h-full scroll-smooth`}
+      className={`${outfit.variable} ${dmSans.variable} h-full scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col antialiased bg-white text-navy font-inter">
+      <body className="min-h-full flex flex-col antialiased bg-white text-navy font-sans">
         <Navbar />
         <main className="flex-1">{children}</main>
 

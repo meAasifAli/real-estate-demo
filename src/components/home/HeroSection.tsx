@@ -80,7 +80,7 @@ export default function HeroSection() {
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 bg-white/10 border border-gold/30 rounded-full mb-6 sm:mb-8 backdrop-blur-sm">
           <Star size={13} className="text-gold fill-gold" />
           <span className="text-white/90 text-xs sm:text-sm font-medium tracking-wide">
-            Dubai&apos;s #1 Luxury Real Estate Agency
+            Bengaluru&apos;s Premier Real Estate Agency
           </span>
         </div>
 
@@ -90,7 +90,7 @@ export default function HeroSection() {
           <span className="text-gold-gradient">Dream Home</span>
         </h1>
         <p className="text-white/75 text-base sm:text-xl mb-6 sm:mb-10 max-w-xl leading-relaxed">
-          Discover exceptional properties in Dubai&apos;s most prestigious communities — crafted for extraordinary living.
+          Discover exceptional properties in Bengaluru&apos;s most prestigious communities — crafted for extraordinary living.
         </p>
 
         {/* Search card */}
@@ -127,7 +127,7 @@ export default function HeroSection() {
               <MapPin size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gold pointer-events-none" />
               <input
                 type="text"
-                placeholder="Location / Community"
+                placeholder="Whitefield, Indiranagar, HSR..."
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -153,17 +153,16 @@ export default function HeroSection() {
               <option value="any">Any Budget</option>
               {activeTab === 'buy' ? (
                 <>
-                  <option value="5m">Up to AED 5M</option>
-                  <option value="10m">AED 5M – 10M</option>
-                  <option value="20m">AED 10M – 20M</option>
-                  <option value="20m+">Above AED 20M</option>
+                  <option value="1.5cr">Up to ₹1.5 Cr</option>
+                  <option value="3cr">₹1.5 Cr – ₹3 Cr</option>
+                  <option value="5cr">₹3 Cr – ₹5 Cr</option>
+                  <option value="5cr+">Above ₹5 Cr</option>
                 </>
               ) : (
                 <>
-                  <option value="15k">Up to AED 15K/mo</option>
-                  <option value="30k">AED 15K – 30K/mo</option>
-                  <option value="50k">AED 30K – 50K/mo</option>
-                  <option value="50k+">Above AED 50K/mo</option>
+                  <option value="40k">Up to ₹40K/mo</option>
+                  <option value="80k">₹40K – ₹80K/mo</option>
+                  <option value="80k+">Above ₹80K/mo</option>
                 </>
               )}
             </select>
@@ -183,7 +182,7 @@ export default function HeroSection() {
           {[
             { value: '2,400+', label: 'Properties Listed' },
             { value: '1,200+', label: 'Happy Clients' },
-            { value: 'AED 4.5B+', label: 'Transactions' },
+            { value: '₹450 Cr+', label: 'Transactions' },
           ].map((s) => (
             <div key={s.label}>
               <div className="font-playfair text-xl sm:text-2xl font-bold text-gold">{s.value}</div>

@@ -19,7 +19,7 @@ export default function FeaturedProperties() {
             Exceptional Properties
           </h2>
           <p className="reveal text-slate-500 text-lg max-w-2xl mx-auto">
-            Handpicked luxury homes and investments in Dubai's most prestigious communities
+            Handpicked luxury homes and investments in Bengaluru&apos;s most prestigious communities
           </p>
         </div>
 

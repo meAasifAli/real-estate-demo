@@ -28,7 +28,7 @@ const services: Service[] = [
     iconColor: 'text-blue-600',
     title: 'Buy Property',
     description:
-      "Find your perfect home from our curated selection of premium properties in Dubai's most sought-after locations.",
+      "Find your perfect home from our curated selection of premium properties in Bengaluru's most sought-after locations.",
     href: '/properties?type=buy',
     cardBg: 'from-blue-50 to-indigo-50',
     hoverBorder: 'hover:border-blue-200',
@@ -158,7 +158,7 @@ export default function ServicesSection() {
               </h3>
               <p className="text-white/60 text-sm sm:text-base max-w-lg">
                 Our multilingual team of certified real estate professionals has helped over 1,200
-                clients find their perfect property in Dubai.
+                clients find their perfect property in Bengaluru.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full md:w-auto shrink-0">

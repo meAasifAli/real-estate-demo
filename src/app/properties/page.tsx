@@ -4,8 +4,8 @@ import PropertiesClient from './PropertiesClient'
 import { PROPERTIES } from '@/lib/data'
 
 export const metadata: Metadata = {
-  title: 'Properties | LuxeEstates Dubai',
-  description: 'Browse premium properties for sale and rent in Dubai. Luxury villas, penthouses, and apartments.',
+  title: 'Properties | LuxeEstates Bengaluru',
+  description: 'Browse premium properties for sale and rent in Bengaluru. Luxury villas, penthouses, and apartments.',
 }
 
 export default function PropertiesPage() {

@@ -74,11 +74,11 @@ export default function Navbar() {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="tel:+97145678900"
+              href="tel:+919845012345"
               className="flex items-center gap-1.5 text-white/80 hover:text-gold text-sm font-medium transition-colors"
             >
               <Phone size={15} />
-              <span>+971 4 567 8900</span>
+              <span>+91 98450 12345</span>
             </a>
             <Link
               href="/properties"
@@ -115,11 +115,11 @@ export default function Navbar() {
 
             <div className="pt-4 mt-2 border-t border-white/10 space-y-3">
               <a
-                href="tel:+97145678900"
+                href="tel:+919845012345"
                 className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl border border-white/20 text-white font-medium text-sm hover:border-gold hover:text-gold transition-colors"
               >
                 <Phone size={15} />
-                Call +971 4 567 8900
+                Call +91 98450 12345
               </a>
               <Link
                 href="/properties"

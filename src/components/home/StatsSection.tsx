@@ -4,7 +4,7 @@ const stats = [
   {
     number: '2,400+',
     label: 'Properties Listed',
-    description: "Across Dubai's prime locations",
+    description: "Across Bengaluru's prime locations",
     Icon: Building2,
     iconBg: 'bg-blue-500/20',
     iconColor: 'text-blue-300',
@@ -18,7 +18,7 @@ const stats = [
     iconColor: 'text-emerald-300',
   },
   {
-    number: 'AED 4.5B+',
+    number: '₹450 Cr+',
     label: 'Total Transactions',
     description: 'In sales & rental volume',
     Icon: BadgeDollarSign,
@@ -36,10 +36,10 @@ const stats = [
 ]
 
 const certs = [
-  'RERA Certified',
+  'Karnataka RERA Registered',
   'ISO 9001:2015',
   'Top Agency Award 2025',
-  'Forbes Top 50',
+  'Verified Property Titles',
 ]
 
 export default function StatsSection() {
