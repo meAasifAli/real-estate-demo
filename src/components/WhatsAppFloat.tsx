@@ -1,30 +1,17 @@
-'use client'
+import { whatsappLink } from '@/lib/data'
+import { WhatsAppIcon } from './icons'
 
-
-
+// Desktop/tablet only — on phones WhatsApp lives in the bottom tab bar
 export default function WhatsAppFloat() {
-  const phoneNumber = '971501234567'
-  const message = encodeURIComponent(
-    "Hello! I'm interested in properties from LuxeEstates. Can you help me?"
-  )
-  const href = `https://wa.me/${phoneNumber}?text=${message}`
-
   return (
     <a
-      href={href}
+      href={whatsappLink("Hello! I'm interested in properties from LuxeEstates. Can you help me?")}
       target="_blank"
       rel="noopener noreferrer"
-      className="whatsapp-float w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform"
+      className="whatsapp-float hidden md:flex w-14 h-14 bg-[#25D366] text-white rounded-full items-center justify-center shadow-xl hover:scale-110 transition-transform"
       aria-label="Chat on WhatsApp"
     >
-      {/* WhatsApp SVG icon */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 32 32"
-        className="w-8 h-8 fill-white"
-      >
-        <path d="M16.003 2.003C8.277 2.003 2 8.28 2 16.003c0 2.484.64 4.87 1.858 6.975L2.003 30l7.222-1.833A13.93 13.93 0 0016.003 30c7.723 0 13.997-6.277 13.997-14S23.726 2.003 16.003 2.003zm0 25.502a11.44 11.44 0 01-5.823-1.588l-.418-.247-4.284 1.086 1.116-4.18-.27-.43a11.41 11.41 0 01-1.818-6.143c0-6.32 5.147-11.464 11.497-11.464 3.072 0 5.957 1.196 8.126 3.368a11.41 11.41 0 013.368 8.107c0 6.32-5.147 11.49-11.494 11.49zm6.303-8.594c-.345-.173-2.044-1.007-2.361-1.122-.316-.114-.547-.172-.777.173-.23.346-.892 1.122-1.094 1.352-.2.23-.402.259-.748.086-.345-.173-1.456-.537-2.773-1.712-1.025-.915-1.717-2.044-1.918-2.39-.2-.346-.022-.533.15-.705.155-.154.345-.403.518-.605.173-.201.23-.345.345-.576.115-.23.058-.432-.029-.605-.086-.173-.777-1.872-1.065-2.563-.28-.672-.563-.58-.777-.59l-.662-.01a1.27 1.27 0 00-.92.43c-.316.346-1.208 1.18-1.208 2.879s1.237 3.338 1.41 3.569c.172.23 2.433 3.713 5.896 5.207.823.356 1.466.568 1.967.727.826.263 1.579.226 2.173.137.663-.1 2.044-.836 2.33-1.644.288-.807.288-1.5.202-1.644-.086-.144-.316-.23-.662-.403z" />
-      </svg>
+      <WhatsAppIcon size={30} />
     </a>
   )
 }

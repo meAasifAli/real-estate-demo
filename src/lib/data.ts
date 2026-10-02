@@ -519,3 +519,87 @@ export const ENQUIRIES: Enquiry[] = [
     message: 'Relocating from Mumbai next month. Wants 4 BHK close to airport expressway.',
   },
 ]
+
+// ── Agency contact (single source of truth) ───────────────────────────────
+export const AGENCY = {
+  name: 'LuxeEstates',
+  phone: '+91 98450 12345',
+  phoneHref: 'tel:+919845012345',
+  whatsapp: '919845012345',
+  email: 'hello@luxeestates.in',
+  address: 'Level 4, Prestige Tech Park, Outer Ring Road, Bengaluru 560103',
+  hours: 'Mon–Sat, 9 AM – 7 PM',
+  rera: 'PRM/KA/RERA/1251/309/AG/2024',
+}
+
+export function whatsappLink(text: string, number: string = AGENCY.whatsapp) {
+  return `https://wa.me/${number}?text=${encodeURIComponent(text)}`
+}
+
+// ── Bengaluru micro-markets ────────────────────────────────────────────────
+export interface Locality {
+  name: string
+  query: string
+  tagline: string
+  pricePerSqft: string
+  image: string
+}
+
+export const LOCALITIES: Locality[] = [
+  {
+    name: 'Whitefield',
+    query: 'Whitefield',
+    tagline: 'IT corridor · Gated villas',
+    pricePerSqft: '₹9,800',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=800&fit=crop&q=75',
+  },
+  {
+    name: 'Indiranagar',
+    query: 'Indiranagar',
+    tagline: 'Café culture · Metro access',
+    pricePerSqft: '₹18,500',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=800&fit=crop&q=75',
+  },
+  {
+    name: 'Koramangala',
+    query: 'Koramangala',
+    tagline: 'Startup hub · Premium rentals',
+    pricePerSqft: '₹17,200',
+    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=800&fit=crop&q=75',
+  },
+  {
+    name: 'HSR Layout',
+    query: 'HSR',
+    tagline: 'Lake views · Family friendly',
+    pricePerSqft: '₹13,400',
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=800&fit=crop&q=75',
+  },
+  {
+    name: 'Sarjapur Road',
+    query: 'Sarjapur',
+    tagline: 'Top schools · New launches',
+    pricePerSqft: '₹8,900',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=800&fit=crop&q=75',
+  },
+  {
+    name: 'Hebbal',
+    query: 'Hebbal',
+    tagline: 'Airport link · Lake front',
+    pricePerSqft: '₹12,600',
+    image: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=600&h=800&fit=crop&q=75',
+  },
+  {
+    name: 'Yelahanka',
+    query: 'Yelahanka',
+    tagline: 'Green belt · Independent homes',
+    pricePerSqft: '₹7,800',
+    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&h=800&fit=crop&q=75',
+  },
+  {
+    name: 'Electronic City',
+    query: 'Electronic City',
+    tagline: 'Commercial · High rental yield',
+    pricePerSqft: '₹6,400',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=800&fit=crop&q=75',
+  },
+]

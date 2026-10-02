@@ -1,108 +1,78 @@
-import { Building2, Users, BadgeDollarSign, Award, ShieldCheck } from 'lucide-react'
+import { ShieldCheck, FileCheck2, Landmark, Handshake } from 'lucide-react'
+import SectionHeader from './SectionHeader'
 
 const stats = [
-  {
-    number: '2,400+',
-    label: 'Properties Listed',
-    description: "Across Bengaluru's prime locations",
-    Icon: Building2,
-    iconBg: 'bg-blue-500/20',
-    iconColor: 'text-blue-300',
-  },
-  {
-    number: '1,200+',
-    label: 'Happy Clients',
-    description: 'Satisfied buyers and renters',
-    Icon: Users,
-    iconBg: 'bg-emerald-500/20',
-    iconColor: 'text-emerald-300',
-  },
-  {
-    number: '₹450 Cr+',
-    label: 'Total Transactions',
-    description: 'In sales & rental volume',
-    Icon: BadgeDollarSign,
-    iconBg: 'bg-gold/20',
-    iconColor: 'text-gold-light',
-  },
-  {
-    number: '18+',
-    label: 'Years Experience',
-    description: 'Trusted since 2008',
-    Icon: Award,
-    iconBg: 'bg-purple-500/20',
-    iconColor: 'text-purple-300',
-  },
+  { number: '2,400+', label: 'Verified listings' },
+  { number: '1,200+', label: 'Families moved in' },
+  { number: '₹450 Cr', label: 'Transactions closed' },
+  { number: '4.9★', label: 'Google rating' },
 ]
 
-const certs = [
-  'Karnataka RERA Registered',
-  'ISO 9001:2015',
-  'Top Agency Award 2025',
-  'Verified Property Titles',
+const pillars = [
+  {
+    Icon: ShieldCheck,
+    title: 'K-RERA registered',
+    text: 'Every project cross-checked against the Karnataka RERA portal before it is listed.',
+  },
+  {
+    Icon: FileCheck2,
+    title: 'Title & Khata verified',
+    text: 'In-house legal team reviews A-Khata, EC and 30-year title chain on resale homes.',
+  },
+  {
+    Icon: Landmark,
+    title: 'Home-loan desk',
+    text: 'Pre-approved offers from SBI, HDFC & ICICI — sanction in as little as 72 hours.',
+  },
+  {
+    Icon: Handshake,
+    title: 'Zero-spam promise',
+    text: 'One dedicated consultant. No call-centre follow-ups, no number sharing. Ever.',
+  },
 ]
 
 export default function StatsSection() {
   return (
-    <section
-      className="section-padding relative overflow-hidden"
-      style={{
-        backgroundImage:
-          'url(https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1920&h=600&fit=crop&q=60)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-      }}
-    >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-navy/88" />
+    <section className="section-padding relative overflow-hidden bg-navy">
+      <div className="absolute -top-32 -left-32 w-[28rem] h-[28rem] rounded-full bg-gold/10 blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-40 -right-20 w-[32rem] h-[32rem] rounded-full bg-navy-light/60 blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Heading */}
-        <div className="text-center mb-14">
-          <div className="reveal inline-flex items-center gap-2 mb-4">
-            <div className="gold-divider" />
-            <span className="text-gold text-sm font-semibold uppercase tracking-widest">
-              Our Track Record
-            </span>
-            <div className="gold-divider" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div>
+            <SectionHeader
+              light
+              eyebrow="Why LuxeEstates"
+              title={<>18 years. One city. <em className="text-gold-gradient">Zero shortcuts.</em></>}
+              subtitle="We only work in Bengaluru — so we know which streets flood in monsoon, which builders deliver on time, and which khata is clean."
+            />
+
+            <div className="grid grid-cols-2 gap-px bg-white/10 rounded-3xl overflow-hidden border border-white/10 reveal">
+              {stats.map(({ number, label }) => (
+                <div key={label} className="bg-navy p-5 sm:p-7">
+                  <div className="font-playfair text-3xl sm:text-5xl font-medium text-white">{number}</div>
+                  <div className="text-white/50 text-xs sm:text-sm mt-1.5">{label}</div>
+                </div>
+              ))}
+            </div>
           </div>
-          <h2 className="reveal font-playfair text-4xl sm:text-5xl font-bold text-white mb-4">
-            Numbers That Speak
-          </h2>
-          <p className="reveal text-white/60 text-lg max-w-xl mx-auto">
-            A legacy of excellence built on trust, expertise, and outstanding results
-          </p>
-        </div>
 
-        {/* Stat cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-          {stats.map(({ number, label, description, Icon, iconBg, iconColor }, i) => (
-            <div
-              key={label}
-              className={`reveal delay-${i * 100 + 100} group text-center p-4 sm:p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-gold/30 transition-all duration-300`}
-            >
-              {/* Icon circle */}
-              <div className={`w-11 h-11 sm:w-14 sm:h-14 ${iconBg} rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-5 group-hover:scale-110 transition-transform`}>
-                <Icon size={22} className={`${iconColor} sm:w-[26px] sm:h-[26px]`} strokeWidth={1.5} />
+          <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 lg:pt-4">
+            {pillars.map(({ Icon, title, text }, i) => (
+              <div
+                key={title}
+                className={`reveal delay-${(i % 2) * 100 + 100} flex sm:block gap-4 p-5 sm:p-6 rounded-3xl bg-white/[0.04] border border-white/10 hover:border-gold/40 transition-colors`}
+              >
+                <div className="w-11 h-11 rounded-2xl bg-gold/15 flex items-center justify-center shrink-0 sm:mb-5">
+                  <Icon size={21} className="text-gold-light" strokeWidth={1.75} />
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold text-[15px] sm:text-base">{title}</h3>
+                  <p className="text-white/55 text-[13px] sm:text-sm leading-relaxed mt-1">{text}</p>
+                </div>
               </div>
-              <div className="font-playfair text-2xl sm:text-4xl font-bold text-gold mb-1 sm:mb-2">
-                {number}
-              </div>
-              <div className="text-white font-semibold mb-1 text-xs sm:text-base">{label}</div>
-              <div className="text-white/50 text-[11px] sm:text-sm line-clamp-1 sm:line-clamp-none">{description}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Certifications row */}
-        <div className="mt-14 flex flex-wrap justify-center gap-6 reveal">
-          {certs.map((cert) => (
-            <div key={cert} className="flex items-center gap-2 text-white/60">
-              <ShieldCheck size={14} className="text-gold flex-shrink-0" />
-              <span className="text-sm font-medium">{cert}</span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

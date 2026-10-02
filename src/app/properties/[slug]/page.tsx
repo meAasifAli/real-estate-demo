@@ -28,7 +28,11 @@ export default async function PropertyDetailPage(props: PageProps<'/properties/[
   if (!property) notFound()
 
   // Related properties (same type, exclude current)
-  const related = PROPERTIES.filter((p) => p.id !== property.id && p.type === property.type).slice(0, 3)
+  const others = PROPERTIES.filter((p) => p.id !== property.id)
+  const related = [
+    ...others.filter((p) => p.type === property.type),
+    ...others.filter((p) => p.type !== property.type && p.listingType === property.listingType),
+  ].slice(0, 3)
 
   return <PropertyDetailClient property={property} related={related} />
 }

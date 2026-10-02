@@ -1,217 +1,228 @@
 'use client'
 
-import { useState } from 'react'
-import { X, Calendar, User, Phone, Mail, MessageSquare, CheckCircle } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { X, Calendar, CheckCircle2, Video, Home as HomeIcon } from 'lucide-react'
 import type { Property } from '@/lib/data'
+import { formatPrice } from '@/lib/data'
 
 interface Props {
   property: Property
   onClose: () => void
 }
 
+const SLOTS = ['10:00 AM', '11:30 AM', '1:00 PM', '3:00 PM', '4:30 PM', '6:00 PM']
+
+function nextDays(count: number) {
+  const days: { iso: string; dow: string; day: number; month: string }[] = []
+  const d = new Date()
+  for (let i = 0; i < count; i++) {
+    const x = new Date(d)
+    x.setDate(d.getDate() + i + 1)
+    days.push({
+      iso: x.toISOString().split('T')[0],
+      dow: i === 0 ? 'Tmrw' : x.toLocaleDateString('en-IN', { weekday: 'short' }),
+      day: x.getDate(),
+      month: x.toLocaleDateString('en-IN', { month: 'short' }),
+    })
+  }
+  return days
+}
+
 export default function ViewingForm({ property, onClose }: Props) {
+  const days = useMemo(() => nextDays(10), [])
   const [form, setForm] = useState({
     name: '',
-    email: '',
     phone: '',
-    date: '',
+    date: days[0].iso,
     time: '',
-    message: '',
+    mode: 'in-person' as 'in-person' | 'video',
   })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [onClose])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!form.time) return
     setLoading(true)
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 1200))
+    await new Promise((r) => setTimeout(r, 1100))
     setLoading(false)
     setSubmitted(true)
   }
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-      />
+  const selectedDay = days.find((d) => d.iso === form.date)
 
-      {/* Modal */}
-      <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto">
+  return (
+    <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4" role="dialog" aria-modal="true" aria-label="Book a site visit">
+      <div className="absolute inset-0 bg-navy/60 backdrop-blur-sm animate-fade" onClick={onClose} />
+
+      <div className="relative bg-white w-full sm:max-w-lg rounded-t-[28px] sm:rounded-[28px] shadow-2xl max-h-[92svh] flex flex-col animate-sheet sm-pop">
+        <div className="sm:hidden w-10 h-1.5 bg-slate-200 rounded-full mx-auto mt-3" />
+
         {/* Header */}
-        <div className="bg-navy px-5 py-5 sm:px-8 sm:py-6 rounded-t-2xl sm:rounded-t-3xl">
+        <div className="flex items-start gap-3 px-5 sm:px-7 pt-4 sm:pt-6 pb-4 border-b border-slate-100">
+          <img src={property.images[0]} alt="" className="w-14 h-14 rounded-2xl object-cover shrink-0" />
+          <div className="min-w-0 flex-1">
+            <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-gold-dark">Book a site visit</div>
+            <div className="font-playfair text-lg font-medium text-navy leading-snug line-clamp-1">{property.title}</div>
+            <div className="text-slate-500 text-xs">{formatPrice(property.price, property.priceUnit)}</div>
+          </div>
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 sm:top-5 sm:right-5 text-white/60 hover:text-white transition-colors"
+            className="w-9 h-9 rounded-full bg-cream flex items-center justify-center text-navy shrink-0"
+            aria-label="Close"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
-          <div className="flex items-center gap-2 mb-1">
-            <Calendar size={16} className="text-gold" />
-            <span className="text-gold text-xs sm:text-sm font-semibold uppercase tracking-widest">Book a Viewing</span>
-          </div>
-          <h2 className="font-playfair text-xl sm:text-2xl font-bold text-white">Schedule Your Visit</h2>
-          <p className="text-white/60 text-xs sm:text-sm mt-1 truncate">{property.title}</p>
         </div>
 
-        <div className="p-5 sm:p-8">
+        <div className="overflow-y-auto px-5 sm:px-7 py-5">
           {submitted ? (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle size={32} className="text-green-500" />
+            <div className="text-center py-6">
+              <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle2 size={34} className="text-emerald-600" />
               </div>
-              <h3 className="font-playfair text-2xl font-semibold text-navy mb-2">Viewing Confirmed!</h3>
-              <p className="text-slate-500 mb-6">
-                Thank you, <strong>{form.name.split(' ')[0]}</strong>! Your viewing request has been received. 
-                Our agent will confirm your appointment within 30 minutes.
+              <h3 className="font-playfair text-2xl font-medium text-navy">You&apos;re booked in!</h3>
+              <p className="text-slate-500 text-sm mt-2 mb-6">
+                Thanks{form.name ? `, ${form.name.split(' ')[0]}` : ''}. {property.agent.name.split(' ')[0]} will confirm on WhatsApp within 30 minutes.
               </p>
-              <div className="bg-cream rounded-xl p-4 text-sm text-slate-600 mb-6">
-                <div className="flex justify-between mb-2">
-                  <span className="text-slate-400">Date</span>
-                  <span className="font-medium">{form.date}</span>
-                </div>
-                <div className="flex justify-between mb-2">
-                  <span className="text-slate-400">Time</span>
-                  <span className="font-medium">{form.time}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-400">Property</span>
-                  <span className="font-medium truncate max-w-[200px]">{property.title}</span>
-                </div>
+              <div className="bg-cream rounded-2xl p-4 text-sm text-left space-y-2 mb-6">
+                <Row k="When" v={`${selectedDay?.dow} ${selectedDay?.day} ${selectedDay?.month}, ${form.time}`} />
+                <Row k="Type" v={form.mode === 'video' ? 'Video walkthrough' : 'In-person visit'} />
+                <Row k="Consultant" v={property.agent.name} />
               </div>
-              <button onClick={onClose} className="btn-gold w-full justify-center">
-                Done
-              </button>
+              <button onClick={onClose} className="btn-dark w-full">Done</button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Name */}
-              <div className="relative">
-                <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+            <form id="viewing-form" onSubmit={handleSubmit} className="space-y-5">
+              {/* Visit mode */}
+              <div className="grid grid-cols-2 gap-2 bg-cream p-1 rounded-2xl">
+                {([
+                  { key: 'in-person', label: 'In person', Icon: HomeIcon },
+                  { key: 'video', label: 'Video call', Icon: Video },
+                ] as const).map(({ key, label, Icon }) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setForm((f) => ({ ...f, mode: key }))}
+                    className={`flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                      form.mode === key ? 'bg-white text-navy shadow-sm' : 'text-slate-500'
+                    }`}
+                  >
+                    <Icon size={15} /> {label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Date strip */}
+              <div>
+                <div className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-2.5">Pick a day</div>
+                <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-5 px-5 sm:-mx-7 sm:px-7">
+                  {days.map((d) => (
+                    <button
+                      key={d.iso}
+                      type="button"
+                      onClick={() => setForm((f) => ({ ...f, date: d.iso }))}
+                      className={`shrink-0 w-[60px] py-2.5 rounded-2xl border text-center transition-all ${
+                        form.date === d.iso ? 'bg-navy border-navy text-white' : 'bg-white border-[#E5E0D6] text-navy'
+                      }`}
+                    >
+                      <div className={`text-[10px] font-semibold uppercase ${form.date === d.iso ? 'text-gold-light' : 'text-slate-400'}`}>{d.dow}</div>
+                      <div className="text-lg font-semibold leading-tight">{d.day}</div>
+                      <div className={`text-[10px] ${form.date === d.iso ? 'text-white/60' : 'text-slate-400'}`}>{d.month}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Time slots */}
+              <div>
+                <div className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-2.5">Pick a time</div>
+                <div className="grid grid-cols-3 gap-2">
+                  {SLOTS.map((s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => setForm((f) => ({ ...f, time: s }))}
+                      className={`chip justify-center ${form.time === s ? 'chip-active' : ''}`}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-3">
                 <input
                   type="text"
-                  placeholder="Full Name *"
+                  placeholder="Your name"
+                  autoComplete="name"
                   required
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  className="input-premium input-with-icon"
+                  className="input-premium"
                 />
-              </div>
-
-              {/* Email */}
-              <div className="relative">
-                <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-                <input
-                  type="email"
-                  placeholder="Email Address *"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                  className="input-premium input-with-icon"
-                />
-              </div>
-
-              {/* Phone */}
-              <div className="relative">
-                <Phone size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-                <input
-                  type="tel"
-                  placeholder="Phone Number *"
-                  required
-                  value={form.phone}
-                  onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-                  className="input-premium input-with-icon"
-                />
-              </div>
-
-              {/* Date & Time */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-medium text-slate-500 mb-1.5 uppercase tracking-wider">Preferred Date</label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy font-semibold pointer-events-none">+91</span>
                   <input
-                    type="date"
+                    type="tel"
+                    inputMode="numeric"
+                    autoComplete="tel-national"
+                    placeholder="Mobile number"
+                    pattern="[0-9 ]{10,11}"
                     required
-                    min={new Date().toISOString().split('T')[0]}
-                    value={form.date}
-                    onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
-                    className="input-premium"
+                    value={form.phone}
+                    onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+                    className="input-premium pl-14"
                   />
                 </div>
-                <div>
-                  <label className="block text-xs font-medium text-slate-500 mb-1.5 uppercase tracking-wider">Preferred Time</label>
-                  <select
-                    required
-                    value={form.time}
-                    onChange={(e) => setForm((f) => ({ ...f, time: e.target.value }))}
-                    className="input-premium"
-                  >
-                    <option value="">Select time</option>
-                    <option>9:00 AM</option>
-                    <option>10:00 AM</option>
-                    <option>11:00 AM</option>
-                    <option>12:00 PM</option>
-                    <option>1:00 PM</option>
-                    <option>2:00 PM</option>
-                    <option>3:00 PM</option>
-                    <option>4:00 PM</option>
-                    <option>5:00 PM</option>
-                    <option>6:00 PM</option>
-                  </select>
-                </div>
               </div>
-
-              {/* Message */}
-              <div className="relative">
-                <MessageSquare size={16} className="absolute left-3.5 top-3.5 text-slate-400 pointer-events-none" />
-                <textarea
-                  placeholder="Additional notes or requirements..."
-                  rows={3}
-                  value={form.message}
-                  onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                  className="input-premium input-with-icon resize-none"
-                />
-              </div>
-
-              {/* Property info */}
-              <div className="bg-cream rounded-xl p-4 flex items-center gap-3">
-                <img
-                  src={property.images[0]}
-                  alt={property.title}
-                  className="w-14 h-14 rounded-lg object-cover flex-shrink-0"
-                />
-                <div>
-                  <div className="font-medium text-navy text-sm line-clamp-1">{property.title}</div>
-                  <div className="text-slate-500 text-xs mt-0.5">{property.location}</div>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-gold w-full justify-center py-4"
-              >
-                {loading ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Confirming...
-                  </>
-                ) : (
-                  <>
-                    <Calendar size={16} />
-                    Confirm Viewing
-                  </>
-                )}
-              </button>
-
-              <p className="text-center text-xs text-slate-400">
-                By submitting, you agree to our Privacy Policy. No spam, ever.
-              </p>
             </form>
           )}
         </div>
+
+        {!submitted && (
+          <div className="px-5 sm:px-7 pt-3 pb-safe sm:pb-6 border-t border-slate-100">
+            <button
+              type="submit"
+              form="viewing-form"
+              disabled={loading || !form.time}
+              className="btn-gold w-full rounded-2xl min-h-[52px]"
+            >
+              {loading ? (
+                <>
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Confirming…
+                </>
+              ) : (
+                <>
+                  <Calendar size={17} />
+                  {form.time ? `Confirm ${selectedDay?.dow} ${selectedDay?.day}, ${form.time}` : 'Select a time slot'}
+                </>
+              )}
+            </button>
+            <p className="text-center text-[11px] text-slate-400 mt-2">Free · No obligation · We never share your number</p>
+          </div>
+        )}
       </div>
+    </div>
+  )
+}
+
+function Row({ k, v }: { k: string; v: string }) {
+  return (
+    <div className="flex justify-between gap-4">
+      <span className="text-slate-500">{k}</span>
+      <span className="font-semibold text-navy text-right">{v}</span>
     </div>
   )
 }
